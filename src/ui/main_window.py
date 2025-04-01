@@ -4,7 +4,7 @@ from ui.video_import import VideoImportPanel
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Educational Video Analyzer")
+        self.setWindowTitle("Video Analyzer")
         self.resize(1000, 700)
 
         central_widget = QWidget()
