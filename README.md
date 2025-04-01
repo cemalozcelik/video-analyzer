@@ -52,4 +52,4 @@ python src/main.py
 ```
 
 ## Application Image
-![AI-Powered Video Analyzer Screenshot](log/screenshot.png)
+![AI-Powered Video Analyzer Screenshot](docs/screenshot.png)
