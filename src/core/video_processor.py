@@ -10,12 +10,6 @@ from yt_dlp import YoutubeDL
 
 
 
-
-def process_video(path):
-    log_info(f"📥 Processing video: {path}")
-    # TODO: Implement real audio extraction / preview
-    log_info("✅ Processing complete")
-
 def sanitize_filename(title: str) -> str:
     sanitized = re.sub(r'[^a-zA-Z0-9_-]', '_', title)
     return re.sub(r'_+', '_', sanitized)  # collapse repeated underscores

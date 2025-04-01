@@ -2,7 +2,7 @@ from PySide6.QtWidgets import (
     QWidget, QPushButton, QVBoxLayout, QFileDialog,
     QLabel, QLineEdit, QMessageBox, QTextEdit
 )
-from core.video_processor import process_video, download_youtube_video, extract_audio
+from core.video_processor import  extract_audio
 from core.transcriber import transcribe_audio
 from utils.logger import log_info, log_error
 from PySide6.QtWidgets import QProgressBar, QComboBox
@@ -60,6 +60,12 @@ class VideoImportPanel(QWidget):
         self.transcription_selector = QComboBox()
         self.transcription_selector.addItems(["Whisper (local)", "OpenAI Whisper", "Claude (summarize only)"])
         self.transcription_selector.setCurrentIndex(0)
+        self.language_selector = QComboBox()
+        self.language_selector.addItems(["English", "Turkish"])
+        self.language_selector.setCurrentIndex(0)  
+
+
+
         
         self.save_button = QPushButton("💾 Save Analysis")
         self.save_button.clicked.connect(self.save_analysis)
@@ -75,15 +81,18 @@ class VideoImportPanel(QWidget):
         layout.addWidget(self.transcription_selector)
         layout.addWidget(self.transcript_output)
         layout.addWidget(self.progress_bar)
-        layout.addWidget(self.analyze_button)
+        layout.addWidget(QLabel("Output Language:"))
+        layout.addWidget(self.language_selector)
         layout.addWidget(QLabel("Analysis Engine:"))
         layout.addWidget(self.analysis_selector)
+        layout.addWidget(self.analyze_button)
         layout.addWidget(self.analysis_output)
         layout.addWidget(self.save_button)
         layout.addWidget(QLabel("Transcription Engine:"))
         layout.addWidget(self.transcription_selector)
         layout.addWidget(QLabel("Analysis Engine:"))
         layout.addWidget(self.analysis_selector)
+
 
 
 
@@ -178,20 +187,6 @@ class VideoImportPanel(QWidget):
         log_error(f"Transcription failed: {message}")
         QMessageBox.critical(self, "Transcription Error", message)
 
-    def run_analysis(self):
-        try:
-            transcript = self.transcript_output.toPlainText()
-            if not transcript.strip():
-                QMessageBox.warning(self, "Empty Transcript", "Please transcribe a video first.")
-                return
-            
-            self.analysis_thread = QThread()
-            
-        except Exception as e:
-            log_error(f"Error during analysis: {e}")
-            QMessageBox.critical(self, "Error", "Something went wrong during analysis.")
-            return
-    
     
     def run_analysis(self):
         transcript = self.transcript_output.toPlainText()
@@ -200,11 +195,11 @@ class VideoImportPanel(QWidget):
             return
 
         self.analysis_output.setPlainText("⏳ Analyzing transcript with AI...")
-        
+        lang = self.language_selector.currentText()
         engine = self.analysis_selector.currentText()
 
         self.analysis_thread = QThread()
-        self.analysis_worker = AIAnalysisWorker(transcript, engine)
+        self.analysis_worker = AIAnalysisWorker(transcript, selected_model=engine, target_language=lang)
         self.analysis_worker.moveToThread(self.analysis_thread)
 
         self.analysis_thread.started.connect(self.analysis_worker.run)

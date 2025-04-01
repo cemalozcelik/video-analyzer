@@ -9,7 +9,7 @@ load_dotenv()
 def get_openai_client():
     return OpenAI()
 
-def analyze_transcript(transcript: str, engine: str = "OpenAI GPT") -> dict:
+def analyze_transcript(transcript: str, engine: str = "OpenAI GPT", target_language: str = "English") -> dict:
     try:
         log_info(f"🧠 Starting AI analysis with {engine}...")
 
@@ -25,6 +25,7 @@ You are an expert AI educational assistant. Given the following transcript of a 
 - Generate a few insightful practice questions
 
 Format your response using proper Markdown with headers, lists, and code blocks where appropriate.
+Output the entire response in **{target_language}**.
 
 ---
 

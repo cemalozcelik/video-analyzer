@@ -1,4 +1,4 @@
-# AI-Powered Video Analyzer
+# 🎥 AI-Powered Video Analyzer
 
 > Turn any YouTube or local video into structured, intelligent learning material using Whisper, GPT, and Claude.
 
@@ -24,8 +24,8 @@ This project is a desktop application that allows you to import or download educ
   - Code blocks (if detected)
 -  Download progress feedback
 -  Engine selector for transcription and analysis
+- Language selection for AI summaries (English & Turkish)
 -  Save output summaries
-
 ---
 
 ## 🛠 Tech Stack
@@ -43,7 +43,6 @@ This project is a desktop application that allows you to import or download educ
 
 ---
 
-
 ## Getting Started
 ```bash
 python3 -m venv venv
@@ -51,3 +50,6 @@ source venv/bin/activate
 pip install -r requirements.txt
 python src/main.py
 ```
+
+## Application Image
+![AI-Powered Video Analyzer Screenshot](log/screenshot.png)
