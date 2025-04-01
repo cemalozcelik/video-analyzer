@@ -1,4 +1,4 @@
-# 🎓 Educational Video Analyzer
+Desktop Video Analyzer
 
 AI-powered desktop app to analyze educational videos, extract transcripts, and generate structured notes.
 
